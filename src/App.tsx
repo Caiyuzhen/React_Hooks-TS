@@ -5,7 +5,9 @@ import MainTodoList from './components/TodoList'
 function App() {
   return (
     <div className="App">
-		<MainTodoList />
+		<React.StrictMode>
+			<MainTodoList />
+		</React.StrictMode>
     </div>
   );
 }
