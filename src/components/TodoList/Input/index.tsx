@@ -1,12 +1,12 @@
 import React, { useRef, FC, ReactElement } from 'react';
-import { ITodo } from '../typings';
+import { ITodoInfo } from '../typings';
 
 /*
 	🧪 Api:
 		hooks:
 			useRef<HTMLInputElement>(null)   useRef 用于保存元素的🌟实例, 然后便可以获取实例上的 value 数据(记得在 input 内绑定 ref={ inputRef }), <HTMLInputElement> 表示范型, (null) 为默认值, 一般为固定写法
 			useCallback                     🌟用来把函数【缓存】起来, 便于子组件调用, 一般用于父组件传递给子组件的方法, 避免子组件频繁跟着父组件更新
-			useState<ITodo>([])				声明状态数据的钩子函数, 相当于同时定义了 【参数】跟【函数】, 【后一个参数为函数】, 能够直接改变第【一个参数的值】
+			useState<ITodoInfo>([])				声明状态数据的钩子函数, 相当于同时定义了 【参数】跟【函数】, 【后一个参数为函数】, 能够直接改变第【一个参数的值】
 			useEffect() 					定一个副效应函数，组件每渲染一次，该函数就自动执行一次，可以【🌟自定义依赖项】，当依赖项有变动才执行此函数！
 				使用场景: 					 发送请求，获取数据、监听订阅事件、设置定时器、console.log、手动更改 DOM 等
 			useReducer()					用于【状态管理】，相当于 useState 的【升级版】, 会返回 
@@ -24,24 +24,22 @@ import { ITodo } from '../typings';
 
 
 
-interface IProps { //定义 TdInput 参数的类型接口, 然后用 ITodo 这个全局接口来定义类型（相当于继承了全局接口？）
-	addTodo: (todoInfo: ITodo) => void //函数的【参数 todoInfo 】的接口类型为 【ITodo】, 类型统一在 typings 内进行声明
-	todoList: ITodo[]  //表示从外界传入的 todoList 数组, 类型为 【ITodo[]】
+
+//🔥🔥一: 定义参数的接口(⚡️⚡️也表明了这个子函数需要传入接口所定义的数据！！），继承全局接口
+interface IProps { //定义 TdInput 参数的类型接口, 然后用 ITodoInfo 这个全局接口来定义类型（相当于继承了全局接口？）
+	addTodo: (todoInfo: ITodoInfo) => void //定义一个函数类型, 参数为 todoInfo, 引用 typings 的接口
+	todoList: ITodoInfo[]  //表示从外界传入的 todoList 数组, 类型为 ITodoInfo[]】
 }
 
 
 
 
-
-
-//函数传入的参数 (🔥addTodo, todoList 需要在【父组件内】来【🔥定义并传入】【addTodo 方法】跟【todoList 数组】这两个参数），也就是 props 属性集合
+//🔥🔥二: 函数传入的参数 (🔥addTodo, todoList 需要在【父组件内】来【🔥定义并传入】【addTodo 方法】跟【todoList 数组】这两个参数），也就是 props 属性集合
 //ReactElement 表示 react 函数有返回的都是 jsx 的 【ReactElement 类型】的元素
 const TdInput:FC<IProps> = ({ addTodo, todoList }): ReactElement => {
 
 
-
 	const inputRef = useRef<HTMLInputElement>(null)  //用于获取 input 元素的实例, 再获取实例上的 value
-
 
 
 	const addItem = ():void =>{//定义一个函数, 用于【添加新 todoInfo】
@@ -56,7 +54,7 @@ const TdInput:FC<IProps> = ({ addTodo, todoList }): ReactElement => {
 				return
 			}
 
-			addTodo({ //执行【addTodo】 函数, 传入参数为 【ITodo】 类型的对象！
+			addTodo({ //🔥🔥三: 执行【addTodo】 函数并传入参数
 				id: new Date().getTime(), //当前时间戳
 				content: value,  //输入框内的值
 				complete: false, //是否完成，默认为 false
