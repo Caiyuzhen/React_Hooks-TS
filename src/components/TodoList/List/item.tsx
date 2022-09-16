@@ -28,7 +28,7 @@ const Item:FC<IProps> = ( {todoInfo, toggleTodo, removeTodo} ): ReactElement => 
 		<div className="todo-item">
 			{/* 🔥第三步: 添加事件 */}
 			<input 
-				type="check" 
+				type="checkbox" 
 				checked={ complete } 
 				onChange={ () => toggleTodo(id) }
 			/>

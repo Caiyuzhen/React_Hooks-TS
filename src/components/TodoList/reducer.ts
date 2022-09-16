@@ -7,13 +7,18 @@ import { ACTIONS_TYPE, IAction, IState, ITodoInfo } from "./typings";
 //这里的reducer函数本身会接受两个参数，第一个是 state，第二个是 action，这个 action 会被 dispatch执行，
 //根据不同的action ，reducer 函数会带来不同的 state 的变化, 是一组钩子
 function todoReducer ( state: IState, action: IAction ) : IState {
-
 	//action 对应三个不同的 todo 操作事件（增删改）, 通过 action 中的 type 来判断
+	//payload 可能是  ITodoInfo、ITodoInfo[]、number
 	const {type, payload} = action//🔥解构赋值出【 type 】和【 payload 】参数, 也就是什么【事件】，什么【对象】
 
 
-
 	switch(type){//或者通过 action.type 来判断
+		case ACTIONS_TYPE.INIT_TODOLIST:
+			return {
+				...state,
+				todoList: payload as ITodoInfo[]//重新赋值
+			}
+
 		case ACTIONS_TYPE.ADD_TODO: 
 			return {	//🔥返回一个新的状态数组
 				...state, //获取【原来的状态】, 平铺老的 state

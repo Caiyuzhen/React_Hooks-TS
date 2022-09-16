@@ -15,7 +15,7 @@ export interface IState {
 
 export interface IAction {
 	type: ACTIONS_TYPE,
-	payload: ITodoInfo | number,//payload 有可能是增加的一项 todoInfo，也有可能是删除一项 todo， 也可能是修改 id
+	payload: ITodoInfo | ITodoInfo[] | number,//payload 有可能是增加的一项 todoInfo，也有可能是删除一项 todo， 也可能是修改 id
 }
 
 
@@ -23,5 +23,6 @@ export interface IAction {
 export enum ACTIONS_TYPE {
 	ADD_TODO = 'addTodo',
 	REMOVE_TODO = 'removeTodo',
-	TOGGLE_TODO = 'toggleTodo'
+	TOGGLE_TODO = 'toggleTodo',
+	INIT_TODOLIST = 'initTodoList'
 }
